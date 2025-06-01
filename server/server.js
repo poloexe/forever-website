@@ -8,6 +8,7 @@ import cors from "cors";
 import mongoDb from "./db/mongoDb.js";
 import authRouter from "./router/authRouter.js";
 import productRouter from "./router/productRouter.js";
+import cartRouter from "./router/cartRouter.js";
 
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.json());
 /* Routes */
 app.use("/api/auth", authRouter);
 app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter);
 
 const startServer = async () => {
   try {
