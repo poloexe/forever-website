@@ -3,7 +3,7 @@ import {
   addToCart,
   getUserCart,
   updateCart,
-} from "../controller/cartController";
+} from "../controller/cartController.js";
 
 const router = Router();
 
