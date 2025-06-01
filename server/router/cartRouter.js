@@ -10,3 +10,5 @@ const router = Router();
 router.post("/add", addToCart);
 router.post("/add", updateCart);
 router.get("/fetchcart", getUserCart);
+
+export default router
