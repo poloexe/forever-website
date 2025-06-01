@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const ShopContext = createContext();
 
@@ -11,6 +11,22 @@ export const ShopProvider = ({ children }) => {
   const [cart, setCart] = useState({});
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  const { mutate: addToCartMutation } = useMutation({
+    mutationFn: async ({ itemId, size }) => {
+      const res = await fetch(
+        "https://forever-website-1mf9.onrender.com/api/cart/add",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ itemId, size }),
+        }
+      );
+      if (!res.ok) throw new Error("Failed to add to cart");
+      return res.json();
+    },
+  });
 
   const { data: products = [] } = useQuery({
     queryKey: ["products"],
@@ -49,9 +65,8 @@ export const ShopProvider = ({ children }) => {
     retry: false,
   });
 
-  const addToCart = async (productId, size) => {
+  const addToCart = (productId, size) => {
     const cartCopy = structuredClone(cart);
-    console.log(cartCopy);
 
     if (cartCopy[productId]) {
       if (cartCopy[productId][size]) {
@@ -65,6 +80,9 @@ export const ShopProvider = ({ children }) => {
     }
 
     setCart(cartCopy);
+
+    // Call the mutation
+    addToCartMutation({ itemId: productId, size });
   };
 
   const getCartTotal = () => {
