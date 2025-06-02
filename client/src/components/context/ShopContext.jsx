@@ -14,17 +14,48 @@ export const ShopProvider = ({ children }) => {
 
   const { mutate: addToCartMutation } = useMutation({
     mutationFn: async ({ itemId, size }) => {
-      const res = await fetch(
-        "https://forever-website-1mf9.onrender.com/api/cart/add",
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ itemId, size }),
-        }
-      );
-      if (!res.ok) throw new Error("Failed to add to cart");
-      return res.json();
+      try {
+        const res = await fetch(
+          "https://forever-website-1mf9.onrender.com/api/cart/add",
+          {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ itemId, size }),
+          }
+        );
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.msg || "Failed to add to cart");
+
+        return res.json();
+      } catch (error) {
+        console.log(error.message);
+        throw error;
+      }
+    },
+  });
+
+  const { data: userCart, refetch: refetchUserCart } = useQuery({
+    queryKey: ["userCart"],
+    queryFn: async () => {
+      try {
+        const res = await fetch(
+          "https://forever-website-1mf9.onrender.com/api/cart/fetchcart",
+
+          {
+            credentials: "include",
+          }
+        );
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.msg || "Failed to add to cart");
+
+        return data;
+      } catch (error) {
+        console.log(error.message);
+        throw error;
+      }
     },
   });
 
@@ -81,7 +112,6 @@ export const ShopProvider = ({ children }) => {
 
     setCart(cartCopy);
 
-    // Call the mutation
     addToCartMutation({ itemId: productId, size });
   };
 
@@ -125,6 +155,10 @@ export const ShopProvider = ({ children }) => {
 
   useEffect(() => {
     setUser(authUser || null);
+  }, [authUser]);
+
+  useEffect(() => {
+    refetchUserCart();
   }, [authUser]);
 
   return (

@@ -8,7 +8,7 @@ import {
 const router = Router();
 
 router.post("/add", addToCart);
-router.post("/add", updateCart);
+router.post("/updatecart", updateCart);
 router.get("/fetchcart", getUserCart);
 
-export default router
+export default router;
