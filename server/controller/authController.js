@@ -173,7 +173,7 @@ export const logout = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).select("-password");
+    const user = await User.findById(req.user.userId).select("-password");
     return res.status(200).json(user);
   } catch (e) {
     return res.status(500).json({ msg: e.message });
