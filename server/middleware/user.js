@@ -10,9 +10,7 @@ export const userAuth = async (req, res, next) => {
     const decoded = jwt.verify(userSession, process.env.jwtSecret);
     if (!decoded) return res.status(401).json({ error: "Invalid token" });
 
-    const user = await User.findById(decoded.userId).select("-password");
-
-    req.user = user;
+    req.user = decoded;
 
     next();
   } catch (e) {
