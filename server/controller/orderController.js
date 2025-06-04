@@ -1,5 +1,5 @@
 import User from "../model/authModel.js";
-import Order from "../model/orderModel/js";
+import Order from "../model/orderModel.js";
 
 export const placeOrderStripe = async (req, res) => {
   try {
