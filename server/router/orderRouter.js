@@ -20,8 +20,8 @@ router.post("/admin/status", admin, updateStatus);
 router.get("/user/lists", userAuth, userOrders);
 
 // Order Status
-router.post("/place-order/stripe", placeOrderStripe);
-router.post("/place-order/razor", placeOrderRazor);
-router.post("/place-order/cash", placeOrderCash);
+router.post("/place-order/stripe", userAuth, placeOrderStripe);
+router.post("/place-order/razor", userAuth, placeOrderRazor);
+router.post("/place-order/cash", userAuth, placeOrderCash);
 
 export default router;
