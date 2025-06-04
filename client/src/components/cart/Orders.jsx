@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const Orders = () => {
-  const { products, currency } = useContext(ShopContext);
-
-  // const newProducts = products.slice(2, 4);
+  const { currency } = useContext(ShopContext);
+  const queryClient = useQueryClient();
 
   const { data: orderData = [] } = useQuery({
     queryKey: ["orders"],
@@ -105,7 +104,14 @@ const Orders = () => {
                 </div>
 
                 <div className="border border-gray-300 py-1 px-3">
-                  <button className="text-sm">Track Order</button>
+                  <button
+                    className="text-sm cursor-pointer"
+                    onClick={() => {
+                      queryClient.invalidateQueries({ queryKey: ["orders"] });
+                    }}
+                  >
+                    Track Order
+                  </button>
                 </div>
               </div>
             </div>
