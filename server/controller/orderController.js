@@ -17,7 +17,7 @@ export const placeOrderStripe = async (req, res) => {
       items,
       amount,
       address,
-      paymentMethod: "stripe",
+      paymentMethod: "Stripe",
       payment: false,
     });
 
@@ -47,7 +47,7 @@ export const placeOrderRazor = async (req, res) => {
       items,
       amount,
       address,
-      paymentMethod: "razor",
+      paymentMethod: "Razor",
       payment: false,
     });
 
@@ -77,7 +77,7 @@ export const placeOrderCash = async (req, res) => {
       items,
       amount,
       address,
-      paymentMethod: "cash",
+      paymentMethod: "Cash On Delivery",
       payment: false,
     });
 
