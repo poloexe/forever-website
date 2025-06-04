@@ -6,7 +6,7 @@ import {
   placeOrderStripe,
   updateStatus,
   userOrders,
-} from "../controller/orderController";
+} from "../controller/orderController.js";
 import { admin } from "../middleware/admin.js";
 import { user } from "../middleware/user.js";
 
