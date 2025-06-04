@@ -18,7 +18,7 @@ const App = () => {
   return (
     <>
       <ToastContainer
-        autoClose={200}
+        autoClose={2000}
         limit={3}
         hideProgressBar={true}
         transition={Slide}

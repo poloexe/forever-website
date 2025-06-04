@@ -6,7 +6,7 @@ import RelatedProducts from "./RelatedProducts";
 import { toast } from "react-toastify";
 
 const Product = () => {
-  const { products, currency, addToCart } = useContext(ShopContext);
+  const { products, currency, addToCart, user } = useContext(ShopContext);
   const { productId } = useParams();
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState("");
@@ -118,7 +118,13 @@ const Product = () => {
             <div>
               <button
                 className="px-8 py-4 text-sm bg-black text-white active:bg-gray-700 cursor-pointer"
-                onClick={handleAddToCart}
+                onClick={() => {
+                  if (user) {
+                    handleAddToCart();
+                  } else {
+                    toast.error("Sorry....Login first 🔑");
+                  }
+                }}
               >
                 ADD TO CART
               </button>

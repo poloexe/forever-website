@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { assets } from "../../assets/assets";
 
-const PaymentMethod = () => {
-  const [method, setMethod] = useState("cash");
-
+const PaymentMethod = ({ method, setMethod }) => {
   return (
     <>
       <div className="flex flex-col gap-3">

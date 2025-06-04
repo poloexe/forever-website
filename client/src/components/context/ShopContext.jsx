@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const ShopContext = createContext();
 
@@ -11,6 +11,7 @@ export const ShopProvider = ({ children }) => {
   const [cart, setCart] = useState({});
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { mutate: addToCartMutation } = useMutation({
     mutationFn: async ({ itemId, size }) => {
@@ -28,15 +29,18 @@ export const ShopProvider = ({ children }) => {
         const data = await res.json();
         if (!res.ok) throw new Error(data.msg || "Failed to add to cart");
 
-        return res.json();
+        return data;
       } catch (error) {
         console.log(error.message);
         throw error;
       }
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userCart"]);
+    },
   });
 
-  const { data: userCart, refetch: refetchUserCart } = useQuery({
+  const { data: userCart } = useQuery({
     queryKey: ["userCart"],
     queryFn: async () => {
       try {
@@ -49,7 +53,7 @@ export const ShopProvider = ({ children }) => {
         );
 
         const data = await res.json();
-        if (!res.ok) throw new Error(data.msg || "Failed to add to cart");
+        if (!res.ok) throw new Error(data.msg || "Something went wrong");
 
         return data;
       } catch (error) {
@@ -57,6 +61,7 @@ export const ShopProvider = ({ children }) => {
         throw error;
       }
     },
+    retry: false,
   });
 
   const { data: products = [] } = useQuery({
@@ -145,7 +150,9 @@ export const ShopProvider = ({ children }) => {
 
       for (let item in cart[items]) {
         if (cart[items][item] > 0) {
-          totalAmount += itemInfo.price * cart[items][item];
+          if (itemInfo) {
+            totalAmount += itemInfo.price * cart[items][item];
+          }
         }
       }
     }
@@ -158,8 +165,10 @@ export const ShopProvider = ({ children }) => {
   }, [authUser]);
 
   useEffect(() => {
-    refetchUserCart();
-  }, [authUser]);
+    if (userCart && userCart.cartData) {
+      setCart(userCart.cartData);
+    }
+  }, [userCart]);
 
   return (
     <ShopContext.Provider

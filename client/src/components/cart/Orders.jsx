@@ -1,10 +1,50 @@
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
+import { useQuery } from "@tanstack/react-query";
 
 const Orders = () => {
   const { products, currency } = useContext(ShopContext);
 
-  const newProducts = products.slice(2, 4);
+  // const newProducts = products.slice(2, 4);
+
+  const { data: orderData = [] } = useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      try {
+        const res = await fetch(
+          "https://forever-website-1mf9.onrender.com/api/order/user/lists",
+          {
+            credentials: "include",
+          }
+        );
+
+        const payload = await res.json();
+        console.log("Payload: ", payload.orders);
+
+        if (!res.ok) throw new Error(payload.msg || "Could not get orders");
+
+        const allOrderItems = [];
+
+        payload.orders.map((order) =>
+          order.items.map((item) => {
+            item["status"] = order.status;
+            item["payment"] = order.payment;
+            item["paymentMethod"] = order.paymentMethod;
+            item["date"] = order.createdAt;
+
+            allOrderItems.push(item);
+          })
+        );
+
+        return allOrderItems.reverse();
+      } catch (error) {
+        console.log(error.message);
+        throw error;
+      }
+    },
+    retry: false,
+  });
+
   return (
     <>
       <div className="flex flex-col gap-4 pt-15">
@@ -17,7 +57,7 @@ const Orders = () => {
 
         <div>
           {/* Orders */}
-          {newProducts.map((product, index) => (
+          {orderData.map((product, index) => (
             <div
               key={index}
               className="flex justify-between items-center py-4 border-b border-t border-gray-300"
@@ -33,14 +73,26 @@ const Orders = () => {
                     <span>
                       {currency} {product.price}
                     </span>
-                    <span>Quantity: 1</span>
-                    <span>Size: M</span>
+                    <span>Quantity: {product.quantity}</span>
+                    <span>Size: {product.size}</span>
                   </p>
                   <p className="text-sm">
-                    Date: <span className="text-gray-400">23rd March 2021</span>
+                    Date:{" "}
+                    <span className="text-gray-400">
+                      {product.date
+                        ? new Date(product.date).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })
+                        : ""}
+                    </span>
                   </p>
                   <p className="text-sm">
-                    Payment: <span className="text-gray-400">COD</span>
+                    Payment:{" "}
+                    <span className="text-gray-400">
+                      {product.paymentMethod}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -49,7 +101,7 @@ const Orders = () => {
               <div className="flex w-1/2 justify-between items-center">
                 <div className="flex gap-2 items-center">
                   <p className="h-2 w-2 rounded-full bg-green-400"></p>
-                  <p>Ready to ship</p>
+                  <p>{product.status}</p>
                 </div>
 
                 <div className="border border-gray-300 py-1 px-3">
