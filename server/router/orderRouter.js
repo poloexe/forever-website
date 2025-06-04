@@ -8,7 +8,7 @@ import {
   userOrders,
 } from "../controller/orderController.js";
 import { admin } from "../middleware/admin.js";
-import { user } from "../middleware/user.js";
+import { userAuth } from "../middleware/user.js";
 
 const router = Router();
 
@@ -17,7 +17,7 @@ router.get("/admin/lists", admin, allOrders);
 router.post("/admin/status", admin, updateStatus);
 
 // User features
-router.get("/user/lists", user, userOrders);
+router.get("/user/lists", userAuth, userOrders);
 
 // Order Status
 router.post("/place-order/stripe", placeOrderStripe);
