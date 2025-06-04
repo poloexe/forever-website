@@ -9,6 +9,7 @@ import mongoDb from "./db/mongoDb.js";
 import authRouter from "./router/authRouter.js";
 import productRouter from "./router/productRouter.js";
 import cartRouter from "./router/cartRouter.js";
+import orderRouter from "./router/orderRouter.js";
 import { userAuth } from "./middleware/user.js";
 
 const PORT = process.env.PORT || 4000;
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", userAuth, cartRouter);
+app.use("/api/order", orderRouter);
 
 const startServer = async () => {
   try {
