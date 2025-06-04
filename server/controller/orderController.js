@@ -56,7 +56,7 @@ export const placeOrderRazor = async (req, res) => {
 
     return res.status(200).json({ success: true, order: newOrder });
   } catch (error) {
-    console.log("Error in placeOrderStripe");
+    console.log("Error in placeOrderRazor");
     return res.status(400).json({ success: false, msg: error.message });
   }
 };
@@ -86,7 +86,7 @@ export const placeOrderCash = async (req, res) => {
 
     return res.status(200).json({ success: true, order: newOrder });
   } catch (error) {
-    console.log("Error in placeOrderStripe");
+    console.log("Error in placeOrderCash");
     return res.status(400).json({ success: false, msg: error.message });
   }
 };
@@ -95,7 +95,16 @@ export const placeOrderCash = async (req, res) => {
 export const allOrders = async (req, res) => {};
 
 // All orders for user client
-export const userOrders = async (req, res) => {};
+export const userOrders = async (req, res) => {
+  const { userId } = req.user;
+
+  const orders = await Order.find({ userId });
+  if (orders.length === 0) {
+    return res.status(200).json({ success: true, msg: "No Orders available" });
+  }
+
+  return res.status(200).json({ success: true, orders });
+};
 
 // Update status
 export const updateStatus = async (req, res) => {};
