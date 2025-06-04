@@ -92,18 +92,37 @@ export const placeOrderCash = async (req, res) => {
 };
 
 // All orders for admin page
-export const allOrders = async (req, res) => {};
+export const allOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    if (orders.length === 0) {
+      return res
+        .status(200)
+        .json({ success: true, msg: "No Orders available" });
+    }
+
+    return res.status(200).json({ success: true, orders });
+  } catch (error) {
+    return res.status(400).json({ success: false, msg: error.message });
+  }
+};
 
 // All orders for user client
 export const userOrders = async (req, res) => {
-  const { userId } = req.user;
+  try {
+    const { userId } = req.user;
 
-  const orders = await Order.find({ userId });
-  if (orders.length === 0) {
-    return res.status(200).json({ success: true, msg: "No Orders available" });
+    const orders = await Order.find({ userId });
+    if (orders.length === 0) {
+      return res
+        .status(200)
+        .json({ success: true, msg: "No Orders available" });
+    }
+
+    return res.status(200).json({ success: true, orders });
+  } catch (error) {
+    return res.status(400).json({ success: false, msg: error.message });
   }
-
-  return res.status(200).json({ success: true, orders });
 };
 
 // Update status
