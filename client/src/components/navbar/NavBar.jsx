@@ -96,7 +96,7 @@ const NavBar = () => {
           </div>
 
           <div className="group relative">
-            <Link to={user ? "/profile" : "/auth"}>
+            <Link to={user ? "" : "/auth"}>
               <img
                 src={assets.profile_icon}
                 alt="profile-icon"
