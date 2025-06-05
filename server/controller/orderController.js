@@ -126,4 +126,33 @@ export const userOrders = async (req, res) => {
 };
 
 // Update status
-export const updateStatus = async (req, res) => {};
+export const updateStatus = async (req, res) => {
+  try {
+    const { orderId, status } = req.body;
+
+    if (!orderId || !status) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "Order ID and status are required" });
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ success: false, msg: "Order not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Successfully updated",
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.log("Error in updatedStatus: ", error.message);
+    return res.status(500).json({ success: false, msg: error.message });
+  }
+};
