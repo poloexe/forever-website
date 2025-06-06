@@ -1,10 +1,10 @@
 import React from "react";
 
-const   CartTotal = ({ getTotalCartAmount, currency, deliveryFee }) => {
+const CartTotal = ({ getTotalCartAmount, currency, deliveryFee }) => {
   return (
     <>
       <div className="flex flex-col w-full gap-5">
-        <h1 className="flex flex-col md:flex-row gap-2 items-center text-2xl text-gray-400 ">
+        <h1 className="flex gap-2 items-center text-2xl text-gray-400 ">
           <span>CART</span>
           <span className="font-medium text-gray-700">TOTAL</span>
           <span className="h-0.5 w-14 bg-gray-700"></span>
@@ -37,7 +37,7 @@ const   CartTotal = ({ getTotalCartAmount, currency, deliveryFee }) => {
             <span className="font-bold text-sm flex justify-between">
               <p>Total</p>
               <p>
-                {currency}
+                {currency}{" "}
                 {getTotalCartAmount() === 0
                   ? 0
                   : getTotalCartAmount() + deliveryFee}

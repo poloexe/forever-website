@@ -56,8 +56,6 @@ const PlaceOrder = () => {
           }
         }
 
-        console.log("Order Items: ", orderItems);
-
         let orderData = {
           address: formData,
           items: orderItems,
@@ -101,11 +99,11 @@ const PlaceOrder = () => {
   };
 
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-col md:flex-row justify-between">
       {/* Left Side  */}
       <form
         ref={formRef}
-        className="flex flex-col gap-10 mt-15 py-4 w-[480px]"
+        className="flex flex-col gap-10 mt-15 py-4 w-full md:w-[480px]"
         onSubmit={submitForm}
       >
         <div className="flex items-center md:flex-row gap-2 text-2xl text-gray-400">
@@ -211,7 +209,7 @@ const PlaceOrder = () => {
       </form>
 
       {/* Right Side */}
-      <div className="flex flex-col justify-between mt-25 pt-5">
+      <div className="flex flex-col gap-8 md:gap-0 justify-between mt-25 pt-5">
         <CartTotal
           getTotalCartAmount={getTotalCartAmount}
           currency={currency}

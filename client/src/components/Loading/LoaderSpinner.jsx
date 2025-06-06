@@ -1,4 +1,4 @@
-const LoaderSpinner = () => {
+export const LoaderSpinner = () => {
   return (
     <>
       <div className="flex items-center justify-center my-28">
@@ -16,5 +16,3 @@ const LoaderSpinner = () => {
     </>
   );
 };
-
-export default LoaderSpinner;

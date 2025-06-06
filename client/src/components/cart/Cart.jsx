@@ -46,7 +46,7 @@ const Cart = () => {
       <div className="pt-14 border-t-1 border-gray-200">
         <div className="flex flex-col gap-8">
           {/* Header Text */}
-          <h1 className="flex flex-col md:flex-row gap-2 items-center text-2xl text-gray-400 ">
+          <h1 className="flex gap-2 items-center text-2xl text-gray-400 ">
             <span>YOUR</span>
             <span className="font-medium text-gray-700">CART</span>
             <span className="h-0.5 w-14 bg-gray-700"></span>
@@ -62,8 +62,8 @@ const Cart = () => {
           />
         </div>
 
-        <div className="flex flex-col items-end gap-8 my-14">
-          <div className="w-[28rem]">
+        <div className="flex flex-col items-start md:items-end gap-8 my-14">
+          <div className="w-full md:w-[28rem]">
             <CartTotal
               getTotalCartAmount={getTotalCartAmount}
               currency={currency}

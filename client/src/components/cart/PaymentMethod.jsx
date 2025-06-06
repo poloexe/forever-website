@@ -10,7 +10,7 @@ const PaymentMethod = ({ method, setMethod }) => {
           <span className="h-0.5 w-14 bg-gray-700"></span>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col md:flex-row gap-3">
           {/* Stripe */}
           <div
             className="flex gap-3 px-3 py-2 items-center border-1 border-gray-300 cursor-pointer"

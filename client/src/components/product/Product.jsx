@@ -4,6 +4,7 @@ import { ShopContext } from "../context/ShopContext";
 import { assets } from "../../assets/assets";
 import RelatedProducts from "./RelatedProducts";
 import { toast } from "react-toastify";
+import { LoaderSpinner } from "../Loading/LoaderSpinner";
 
 const Product = () => {
   const { products, currency, addToCart, user } = useContext(ShopContext);
@@ -34,6 +35,13 @@ const Product = () => {
     fetchProductData();
   }, [products, productId]);
 
+  const sizeOrder = ["S", "M", "L", "XL", "XXL"];
+  const sortedSizes = productData?.sizes
+    ? [...productData.sizes].sort(
+        (a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b)
+      )
+    : [];
+
   return (
     <div
       className={`flex flex-col gap-10 pt-10 transition-opacity ease-in duration-500 ${
@@ -41,7 +49,7 @@ const Product = () => {
       }`}
     >
       {!productData ? (
-        <p>Loading...</p>
+        <LoaderSpinner />
       ) : (
         <div className="flex flex-col md:flex-row gap-12">
           <div className="flex flex-col-reverse md:flex-row gap-3 h-fit">
@@ -53,7 +61,7 @@ const Product = () => {
                   key={index}
                   alt="Thumbnail img"
                   className="cursor-pointer w-24"
-                  onClick={() => setImage(item)}
+                  onClick={() => setImage(item.url)}
                 />
               ))}
             </div>
@@ -98,14 +106,16 @@ const Product = () => {
             </p>
 
             {/* Description */}
-            <p className="text-gray-500 w-full md:w-4/5">{productData?.description}</p>
+            <p className="text-gray-500 w-full md:w-4/5">
+              {productData?.description}
+            </p>
 
             {/* Size */}
             <div className="flex flex-col gap-4">
               <p>Select size</p>
 
               <div className="flex gap-3">
-                {productData?.sizes.map((item, index) => (
+                {sortedSizes.map((item, index) => (
                   <button
                     key={index}
                     className={`border border-gray-200 bg-gray-100 px-4 py-2 cursor-pointer ${
