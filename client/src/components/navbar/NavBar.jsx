@@ -1,13 +1,13 @@
 import { assets } from "../../assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import SearchBar from "../search/SearchBar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import MobileMenu from "../mobile/MobileMenu";
 
 const NavBar = () => {
-  const { user, setUser, getCartTotal } = useContext(ShopContext);
   const navLinks = [
     {
       name: "HOME",
@@ -26,6 +26,9 @@ const NavBar = () => {
       link: "/contact",
     },
   ];
+  const [visible, setVisible] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const { user, setUser, getCartTotal } = useContext(ShopContext);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -96,7 +99,10 @@ const NavBar = () => {
           </div>
 
           <div className="group relative">
-            <Link to={user ? "" : "/auth"}>
+            <Link
+              to={user ? "" : "/auth"}
+              onClick={() => setShowMenu(!showMenu)}
+            >
               <img
                 src={assets.profile_icon}
                 alt="profile-icon"
@@ -105,7 +111,11 @@ const NavBar = () => {
             </Link>
 
             {user && (
-              <div className="hidden group-hover:block absolute right-0 pt-5">
+              <div
+                className={`${
+                  showMenu ? "block" : "hidden"
+                } md:group-hover:block absolute right-0 pt-5`}
+              >
                 {/* Dropdown menu */}
                 <div className="flex flex-col gap-2 w-32 pl-4 py-4 text-gray-500 bg-slate-100 rounded-lg">
                   <p className="hover:text-black cursor-pointer">Profile</p>
@@ -133,13 +143,22 @@ const NavBar = () => {
             </p>
           </Link>
 
+          {/* Mobile Menu Icon */}
           <div>
             <img
               src={assets.menu_icon}
               alt="menu-icon"
               className="md:hidden h-4"
+              onClick={() => setVisible(true)}
             />
           </div>
+
+          {/* Mobile Menu */}
+          <MobileMenu
+            visible={visible}
+            setVisible={setVisible}
+            navLinks={navLinks}
+          />
         </div>
       </div>
     </>

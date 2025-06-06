@@ -15,7 +15,7 @@ const SearchBar = () => {
         <input
           type="text"
           className={`bg-gray-50 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none transition-all duration-300 ease-in-out ${
-            isCollectionsPage && focused ? "w-64" : "w-12"
+            isCollectionsPage && focused ? "w-40 md:w-64" : "w-8 md:w-12"
           }`}
           placeholder={isCollectionsPage ? "Search..." : ""}
           onFocus={() => {

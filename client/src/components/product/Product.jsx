@@ -43,23 +43,28 @@ const Product = () => {
       {!productData ? (
         <p>Loading...</p>
       ) : (
-        <div className="flex gap-12">
-          <div className="flex flex-col-reverse md:flex-row gap-3">
+        <div className="flex flex-col md:flex-row gap-12">
+          <div className="flex flex-col-reverse md:flex-row gap-3 h-fit">
             {/* Thumbnail img */}
-            <div className="flex flex-col justify-between w-24">
+            <div className="flex flex-row md:flex-col justify-between">
               {productData?.image?.map((item, index) => (
                 <img
                   src={item.url}
                   key={index}
                   alt="Thumbnail img"
-                  className="cursor-pointer"
+                  className="cursor-pointer w-24"
                   onClick={() => setImage(item)}
                 />
               ))}
             </div>
+
             {/* Main Img */}
             <div>
-              <img src={image} alt="Main img" className="w-md h-auto" />
+              <img
+                src={image}
+                alt="Main img"
+                className="w-full md:w-md h-full md:h-auto"
+              />
             </div>
           </div>
 
@@ -93,7 +98,7 @@ const Product = () => {
             </p>
 
             {/* Description */}
-            <p className="text-gray-500 w-4/5">{productData?.description}</p>
+            <p className="text-gray-500 w-full md:w-4/5">{productData?.description}</p>
 
             {/* Size */}
             <div className="flex flex-col gap-4">

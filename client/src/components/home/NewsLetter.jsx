@@ -1,5 +1,3 @@
-import React from "react";
-
 const NewsLetter = () => {
   return (
     <>
@@ -8,19 +6,19 @@ const NewsLetter = () => {
           <h1 className="text-2xl text-center text-gray-800 font-semibold">
             Subscribe now & get 20% off
           </h1>
-          <p className="text-gray-400 text-center">
+          <p className="text-gray-400 text-sm md:text-md text-center">
             Subscribe to get 20% off and stay updated with exclusive offers.
           </p>
         </div>
 
         {/* Input Section */}
-        <div className="md:w-1/2 flex">
+        <div className="w-full md:w-1/2 flex">
           <input
             type="email"
-            className="w-full border-1 px-3 border-gray-400 outline-none"
+            className="w-full border-1 px-3 border-gray-400 outline-none text-sm md:text-md"
             placeholder="Enter your email"
           />
-          <button className="btn text-xs py-4 px-6 bg-black text-white">
+          <button className="btn text-xs py-4 px-6 bg-black text-white cursor-pointer">
             SUBSCRIBE
           </button>
         </div>

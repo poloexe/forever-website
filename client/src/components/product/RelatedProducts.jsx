@@ -29,13 +29,13 @@ const RelatedProducts = ({ category, subCategory }) => {
       <div className="flex flex-col gap-10 items-center justify-center">
         {/* Latest Collections Text */}
         <div className="flex flex-col gap-2">
-          <div className="flex flex-col md:flex-row gap-2 items-center justify-center text-3xl text-gray-400">
+          <div className="flex flex-row gap-2 items-center justify-center text-2xl md:text-3xl text-gray-400">
             <span>RELATED</span>
             <span className="font-medium text-gray-700">PRODUCTS</span>
             <span className="h-0.5 w-14 bg-gray-700"></span>
           </div>
 
-          <p className="text-sm md:text-md text-center text-gray-700">
+          <p className="text-xs md:text-md text-center text-gray-700">
             Discover the finest trends in fashion and style, crafted to
             perfection for you.
           </p>

@@ -4,7 +4,7 @@ const AllCollections = ({ filteredProducts, currency }) => {
   return (
     <>
       <div>
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {filteredProducts.map((product, index) => (
             <Link
               to={`/product/${product._id}`}
@@ -18,7 +18,7 @@ const AllCollections = ({ filteredProducts, currency }) => {
                 />
               </div>
 
-              <p className="text-gray-700 text-sm">{product.name}</p>
+              <p className="text-gray-700 text-xs md:text-sm">{product.name}</p>
               <p className=" text-gray-700 text-xs font-semibold">
                 {currency} {product.price}
               </p>

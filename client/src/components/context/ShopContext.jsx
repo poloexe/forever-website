@@ -98,7 +98,6 @@ export const ShopProvider = ({ children }) => {
         throw error;
       }
     },
-    retry: false,
   });
 
   const addToCart = (productId, size) => {

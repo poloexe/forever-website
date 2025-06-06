@@ -12,14 +12,14 @@ const Contact = () => {
           <span className="h-0.5 w-14 bg-gray-700"></span>
         </h1>
 
-        <div className=" flex gap-12">
+        <div className="flex flex-col md:flex-row gap-12">
           <img
             src={assets.contact_img}
             alt="about_img"
             className="w-[450px] object-cover"
           />
 
-          <div className="flex flex-col justify-around py-12">
+          <div className="flex flex-col gap-6 md:gap-0 justify-around py-12">
             <h1 className="flex text-2xl items-center text-gray-700 font-semibold leading-relaxed">
               Our Store
             </h1>
