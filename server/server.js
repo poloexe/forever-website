@@ -23,7 +23,11 @@ cloudinary.config({
 
 app.use(
   cors({
-    origin: ["http://localhost:4000", "http://localhost:5000"],
+    origin: [
+      "http://localhost:4000",
+      "http://localhost:5000",
+      "https://forever-website-chi.vercel.app",
+    ],
     credentials: true,
   })
 );
