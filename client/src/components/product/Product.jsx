@@ -71,7 +71,7 @@ const Product = () => {
               <img
                 src={image}
                 alt="Main img"
-                className="w-full md:w-md h-full md:h-auto"
+                className="w-full md:w-auto h-full md:h-auto"
               />
             </div>
           </div>
