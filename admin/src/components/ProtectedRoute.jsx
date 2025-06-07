@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Navigate } from "react-router-dom";
-import LoaderSpinner from "./LoaderSpinner";
+import { LoaderSpinner } from "./LoaderSpinner";
 
 const ProtectedRoute = ({ children }) => {
   const { data, isLoading, isError, isFetching } = useQuery({

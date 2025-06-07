@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { LoaderSpinner } from "../components/LoaderSpinner";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,8 +10,19 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["authAdmin"],
+    queryFn: async () => {
+      const res = await fetch(
+        "https://forever-website-1mf9.onrender.com/api/auth/getadmin",
+        { credentials: "include" }
+      );
+      if (!res.ok) return null;
+      return res.json();
+    },
+  });
 
   const handleInputChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -49,6 +61,9 @@ const Login = () => {
     e.preventDefault();
     login(formData);
   };
+
+  if (isLoading) return <LoaderSpinner />;
+  if (data) return <Navigate to="/admin/add" replace />;
 
   return (
     <div className="min-h-screen flex items-center justify-center">
