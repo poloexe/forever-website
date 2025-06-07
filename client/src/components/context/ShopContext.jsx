@@ -78,7 +78,7 @@ export const ShopProvider = ({ children }) => {
     },
   });
 
-  const { data: authUser } = useQuery({
+  const { data: authUser, isSuccess } = useQuery({
     queryKey: ["authUser"],
     queryFn: async () => {
       try {
@@ -90,14 +90,16 @@ export const ShopProvider = ({ children }) => {
         );
 
         const data = await res.json();
-
         if (!res.ok) throw new Error(data.msg || "Something went wrong");
 
         return data;
       } catch (error) {
-        throw error;
+        return null;
       }
     },
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 
   const addToCart = (productId, size) => {
@@ -160,8 +162,12 @@ export const ShopProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    setUser(authUser || null);
-  }, [authUser]);
+    if (isSuccess) {
+      setUser(authUser);
+    } else {
+      setUser(null);
+    }
+  }, [authUser, isSuccess]);
 
   useEffect(() => {
     if (userCart && userCart.cartData) {

@@ -1,7 +1,7 @@
 import { assets } from "../../assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import SearchBar from "../search/SearchBar";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -58,6 +58,10 @@ const NavBar = () => {
     e.preventDefault();
     logout();
   };
+
+  useEffect(() => {
+    setShowMenu(false);
+  }, [user]);
 
   return (
     <>

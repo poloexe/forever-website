@@ -43,8 +43,8 @@ const Auth = () => {
       if (!res.ok) throw new Error(payload.msg || "Something went wrong");
     },
     onSuccess: () => {
-      toast.success("Login Successful 😊");
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      toast.success("Login Successful 😊");
       navigate("/");
     },
   });
@@ -84,7 +84,7 @@ const Auth = () => {
       register(formData);
     }
   };
-
+  
   return (
     <>
       <form
