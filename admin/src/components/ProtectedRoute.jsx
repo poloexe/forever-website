@@ -27,7 +27,7 @@ const ProtectedRoute = ({ children }) => {
   });
 
   if (isLoading || isFetching) return <LoaderSpinner />;
-  if (isError || !data) return <Navigate to="/admin/login" replace />;
+  if (isError || !data) return <Navigate to="/" replace />;
   return children;
 };
 

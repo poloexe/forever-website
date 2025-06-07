@@ -8,7 +8,7 @@ const Sidebar = () => {
       <div className="flex flex-col gap-4 pl-12 mt-6">
         {/* Add Items */}
         <NavLink
-          to="/admin/add"
+          to="/add"
           className={({ isActive }) =>
             `flex items-center gap-3 border border-r-0 border-gray-300 pl-2 py-2 rounded-sm cursor-pointer ${
               isActive ? "active-add" : ""
@@ -21,7 +21,7 @@ const Sidebar = () => {
 
         {/* List Itmes */}
         <NavLink
-          to="/admin/lists"
+          to="/lists"
           className={({ isActive }) =>
             `flex items-center gap-3 border border-r-0 border-gray-300 pl-2 py-2 rounded-sm cursor-pointer ${
               isActive ? "active-add" : ""
@@ -34,7 +34,7 @@ const Sidebar = () => {
 
         {/* Orders */}
         <NavLink
-          to="/admin/orders"
+          to="/orders"
           className={({ isActive }) =>
             `flex items-center gap-3 border border-r-0 border-gray-300 pl-2 py-2 rounded-sm cursor-pointer ${
               isActive ? "active-add" : ""

@@ -53,7 +53,7 @@ const Login = () => {
     onSuccess: () => {
       toast.success("Login Success!");
       queryClient.invalidateQueries({ queryKey: ["authAdmin"] });
-      navigate("/admin/add");
+      navigate("/add");
     },
   });
 
@@ -63,7 +63,7 @@ const Login = () => {
   };
 
   if (isLoading) return <LoaderSpinner />;
-  if (data) return <Navigate to="/admin/add" replace />;
+  if (data) return <Navigate to="/add" replace />;
 
   return (
     <div className="min-h-screen flex items-center justify-center">

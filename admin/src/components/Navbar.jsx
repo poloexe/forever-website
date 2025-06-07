@@ -29,7 +29,7 @@ const Navbar = () => {
     onSuccess: () => {
       toast.success("Logout Success!");
       queryClient.invalidateQueries({ queryKey: ["authAdmin"] });
-      navigate("/admin/login");
+      navigate("/");
     },
   });
 

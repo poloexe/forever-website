@@ -3,13 +3,12 @@ import Sidebar from "./components/Sidebar";
 import Lists from "./pages/Lists";
 import AddItems from "./pages/AddItems";
 import Orders from "./pages/Orders";
-import { Route, Routes, Outlet } from "react-router-dom";
+import { Route, Routes, Outlet, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer, Slide } from "react-toastify";
 
 export const currency = "₦";
-
 
 function ProtectedLayout() {
   return (
@@ -36,7 +35,7 @@ function App() {
       />
 
       <Routes>
-        <Route path="/admin/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route
           element={
             <ProtectedRoute>
@@ -44,9 +43,9 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="/admin/add" element={<AddItems />} />
-          <Route path="/admin/lists" element={<Lists />} />
-          <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/add" element={<AddItems />} />
+          <Route path="/lists" element={<Lists />} />
+          <Route path="/orders" element={<Orders />} />
         </Route>
       </Routes>
     </>
