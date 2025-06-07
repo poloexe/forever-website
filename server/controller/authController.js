@@ -165,7 +165,7 @@ export const logout = async (req, res) => {
 
     res.setHeader(
       "Set-Cookie",
-      `userSession=${token}; Max-Age=0; HttpOnly; Path=/; SameSite=None; ${
+      `userSession=; Max-Age=0; HttpOnly; Path=/; SameSite=None; ${
         secure ? "Secure" : ""
       }; Partitioned`
     );
