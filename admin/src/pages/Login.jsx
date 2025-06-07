@@ -1,28 +1,16 @@
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoaderSpinner } from "../components/LoaderSpinner";
+import { useAdminUser } from "../hooks/useAdminUser";
+import { useAdminLogin } from "../hooks/useAdminLogin";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["authAdmin"],
-    queryFn: async () => {
-      const res = await fetch(
-        "https://forever-website-1mf9.onrender.com/api/auth/getadmin",
-        { credentials: "include" }
-      );
-      if (!res.ok) return null;
-      return res.json();
-    },
-  });
+  const { data: admin, isLoading, isError, error } = useAdminUser();
 
   const handleInputChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -30,40 +18,23 @@ const Login = () => {
   const {
     mutate: login,
     isPending,
-    isError,
-    error,
-  } = useMutation({
-    mutationFn: async ({ email, password }) => {
-      const res = await fetch(
-        "https://forever-website-1mf9.onrender.com/api/auth/adminlogin",
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.msg || "Something went wrong");
-    },
-    onSuccess: () => {
-      toast.success("Login Success!");
-      queryClient.invalidateQueries({ queryKey: ["authAdmin"] });
-      navigate("/add");
-    },
-  });
+    isError: isLoginError,
+    error: loginError,
+  } = useAdminLogin({ email: formData.email, password: formData.password });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     login(formData);
   };
 
+  useEffect(() => {
+    if (isError && error?.message) {
+      toast.error(error.message);
+    }
+  }, [isError, error]);
+
   if (isLoading) return <LoaderSpinner />;
-  if (data) return <Navigate to="/add" replace />;
+  if (admin) return <Navigate to="/add" replace />;
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -99,8 +70,10 @@ const Login = () => {
             onChange={handleInputChange}
           />
 
-          {isError ? (
-            <p className="text-red-500 text-center shake-x">{error.message}</p>
+          {isLoginError ? (
+            <p className="text-red-500 text-center shake-x">
+              {loginError.message}
+            </p>
           ) : (
             ""
           )}
