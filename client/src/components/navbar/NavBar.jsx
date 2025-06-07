@@ -26,8 +26,8 @@ const NavBar = () => {
       link: "/contact",
     },
   ];
-  const [visible, setVisible] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
+  const [visible, setVisible] = useState(false); // Mobile Menu
+  const [showMenu, setShowMenu] = useState(false); // Dropdown menu
   const { user, setUser, getCartTotal } = useContext(ShopContext);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ const NavBar = () => {
           ))}
 
           <a
-            href="http://localhost:4000/admin/login"
+            href="https://forever-website-4grt.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-gray-600 border border-gray-200 rounded-full px-4 py-2 font-medium"
