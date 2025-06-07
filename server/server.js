@@ -27,6 +27,7 @@ app.use(
       "http://localhost:4000",
       "http://localhost:5000",
       "https://forever-website-chi.vercel.app",
+      "https://forever-website-yckc.vercel.app",
     ],
     credentials: true,
   })
