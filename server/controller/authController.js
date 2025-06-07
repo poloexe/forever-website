@@ -47,12 +47,14 @@ export const register = async (req, res) => {
         }
       );
 
-      res.cookie("userSession", token, {
-        maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "strict",
-        secure: process.env.NODE_ENV !== "development",
-      });
+      const secure = process.env.NODE_ENV !== "development";
+
+      res.setHeader(
+        "Set-Cookie",
+        `userSession=${token}; Max-Age=86400; HttpOnly; Path=/; SameSite=None; ${
+          secure ? "Secure" : ""
+        }; Partitioned`
+      );
 
       return res.status(201).json({
         _id: newUser._id,
@@ -94,14 +96,14 @@ export const login = async (req, res) => {
       }
     );
 
-    res.cookie("userSession", token, {
-      maxAge: 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      sameSite: "none",
-      secure: process.env.NODE_ENV !== "development",
-    });
+    const secure = process.env.NODE_ENV !== "development";
 
-    console.log("ENV IS: ", process.env.NODE_ENV);
+    res.setHeader(
+      "Set-Cookie",
+      `userSession=${token}; Max-Age=86400; HttpOnly; Path=/; SameSite=None; ${
+        secure ? "Secure" : ""
+      }; Partitioned`
+    );
 
     return res.status(200).json({
       success: true,
@@ -136,13 +138,14 @@ export const adminLogin = async (req, res) => {
       }
     );
 
-    res.cookie("userSession", token, {
-      maxAge: 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      sameSite: "none",
-      secure: process.env.NODE_ENV !== "development",
-      partitioned: true,
-    });
+    const secure = process.env.NODE_ENV !== "development";
+
+    res.setHeader(
+      "Set-Cookie",
+      `userSession=${token}; Max-Age=86400; HttpOnly; Path=/; SameSite=None; ${
+        secure ? "Secure" : ""
+      }; Partitioned`
+    );
 
     return res.status(200).json({
       _id: user._id,
@@ -158,9 +161,14 @@ export const adminLogin = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.clearCookie("userSession", "", {
-      maxAge: 0,
-    });
+    const secure = process.env.NODE_ENV !== "development";
+
+    res.setHeader(
+      "Set-Cookie",
+      `userSession=${token}; Max-Age=0; HttpOnly; Path=/; SameSite=None; ${
+        secure ? "Secure" : ""
+      }; Partitioned`
+    );
 
     return res.status(200).json({
       success: true,
