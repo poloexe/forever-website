@@ -34,15 +34,15 @@ const MobileMenu = ({ visible, setVisible, navLinks }) => {
             </NavLink>
           ))}
 
-          <NavLink
-            to=""
-            className={({ isActive }) =>
-              `py-2 pl-6 border border-gray-200 ${isActive ? "" : ""}`
-            }
+          <a
+            href="http://localhost:4000/admin/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="py-2 pl-6 border border-gray-200"
             onClick={() => setVisible(false)}
           >
             ADMIN PANEL
-          </NavLink>
+          </a>
         </div>
       </div>
     </div>

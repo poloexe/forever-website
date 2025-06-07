@@ -62,11 +62,11 @@ const NavBar = () => {
   return (
     <>
       <div className="flex justify-between items-center py-5">
-        <div>
-          <img src={assets.logo} alt="logo-img" className="w-32 md:w-36" />
-        </div>
+        <Link to="/">
+          <img src={assets.logo} alt="logo-img" className="w-28 md:w-36" />
+        </Link>
 
-        <div className="hidden md:flex gap-5 items-center">
+        <div className="hidden lg:flex gap-5 items-center">
           {navLinks.map((link, index) => (
             <NavLink
               to={link.link}
@@ -84,12 +84,14 @@ const NavBar = () => {
             </NavLink>
           ))}
 
-          <Link
-            to=""
+          <a
+            href="http://localhost:4000/admin/login"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-xs text-gray-600 border border-gray-200 rounded-full px-4 py-2 font-medium"
           >
             Admin Panel
-          </Link>
+          </a>
         </div>
 
         <div className="flex items-center gap-6">
@@ -106,7 +108,7 @@ const NavBar = () => {
               <img
                 src={assets.profile_icon}
                 alt="profile-icon"
-                className="cursor-pointer w-5"
+                className="cursor-pointer w-4 md:w-5"
               />
             </Link>
 
@@ -137,7 +139,11 @@ const NavBar = () => {
           </div>
 
           <Link to="/cart" className="relative cursor-pointer">
-            <img src={assets.cart_icon} alt="cart-icon" className="w-5" />
+            <img
+              src={assets.cart_icon}
+              alt="cart-icon"
+              className="w-4 md:w-5"
+            />
             <p className="absolute rounded-full h-4 w-4 bg-black text-[8px] leading-4 text-white text-center right-[-5px] bottom-[-5px]">
               {getCartTotal()}
             </p>
@@ -148,7 +154,7 @@ const NavBar = () => {
             <img
               src={assets.menu_icon}
               alt="menu-icon"
-              className="md:hidden h-4"
+              className="lg:hidden w-4.5 md:w-5"
               onClick={() => setVisible(true)}
             />
           </div>

@@ -176,14 +176,14 @@ const Collection = () => {
           </div>
 
           <div className="w-full flex flex-col gap-5">
-            <div className="flex justify-between">
-              <h1 className="text-gray-500 font-medium text-xl md:text-2xl flex gap-2 items-center">
+            <div className="flex justify-between w-full">
+              <h1 className="text-gray-500 font-medium text-md md:text-2xl flex gap-1 md:gap-2 items-center">
                 ALL <span className="text-gray-700">COLLECTIONS</span>
-                <div className="bg-gray-700 w-14 h-0.5"></div>
+                <div className="bg-gray-700 w-6 md:w-14 h-0.5"></div>
               </h1>
 
               <select
-                className="border-2 border-gray-400 rounded-lg py-2 px-2 text-sm"
+                className="border-2 border-gray-400 rounded-lg px-1.5 py-1.5 md:py-2 md:px-2 text-xs md:text-sm"
                 onChange={(e) => setSortType(e.target.value)}
               >
                 <option value="relevance">Sort by: Relevance</option>

@@ -14,7 +14,7 @@ const LatestCollection = () => {
       <div className="flex flex-col gap-10 items-center justify-center">
         {/* Latest Collections Text */}
         <div className="flex flex-col gap-2">
-          <div className="flex  gap-2 items-center justify-center text-2xl sm:text-3xl text-gray-400">
+          <div className="flex gap-2 items-center justify-center text-2xl sm:text-3xl text-gray-400">
             <span>LATEST</span>
             <span className="font-medium text-gray-700">COLLECTIONS</span>
             <span className="h-0.5 w-14 bg-gray-700"></span>
@@ -26,7 +26,7 @@ const LatestCollection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
           {latestProducts.map((product, index) => (
             <Link
               to={`/product/${product._id}`}

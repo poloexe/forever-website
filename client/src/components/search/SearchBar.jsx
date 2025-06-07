@@ -14,7 +14,7 @@ const SearchBar = () => {
       <div className="relative border-2 border-gray-400 rounded-full transition-all duration-300">
         <input
           type="text"
-          className={`bg-gray-50 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none transition-all duration-300 ease-in-out ${
+          className={`bg-gray-50 h-10 px-5 pr-8 md:pr-10 rounded-full text-sm focus:outline-none transition-all duration-300 ease-in-out ${
             isCollectionsPage && focused ? "w-40 md:w-64" : "w-8 md:w-12"
           }`}
           placeholder={isCollectionsPage ? "Search..." : ""}
@@ -40,7 +40,7 @@ const SearchBar = () => {
           disabled={!isCollectionsPage}
         >
           <svg
-            className="h-4 w-4 fill-current"
+            className="w-3 h-4 md:w-4 fill-current"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >

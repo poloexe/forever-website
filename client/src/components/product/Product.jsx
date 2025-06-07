@@ -14,7 +14,7 @@ const Product = () => {
   const [size, setSize] = useState("");
 
   const fetchProductData = async () => {
-    const product = products.find((product) => product._id === productId);
+    const product = await products.find((product) => product._id === productId);
 
     if (product) {
       setProductData(product);
@@ -77,10 +77,12 @@ const Product = () => {
           </div>
 
           {/* Details */}
-          <div className="flex flex-1 flex-col gap-6">
+          <div className="flex flex-1 flex-col gap-3 lg:gap-6">
             {/* Name */}
             <div className="flex flex-col gap-3">
-              <h1 className="text-2xl font-medium">{productData?.name}</h1>
+              <h1 className="text-lg lg:text-2xl font-medium">
+                {productData?.name}
+              </h1>
 
               {/* Ratings */}
               <div className="flex gap-2">
@@ -92,21 +94,21 @@ const Product = () => {
                   <img
                     src={assets.star_dull_icon}
                     alt="star-icon"
-                    className="w-3 5"
+                    className="w-3"
                   />
                 </div>
 
-                <p>(122)</p>
+                <p className="text-sm lg:text-base">(122)</p>
               </div>
             </div>
 
             {/* Price */}
-            <p className="text-3xl font-medium">
+            <p className="text-lg lg:text-3xl font-medium">
               {currency} {productData?.price}
             </p>
 
             {/* Description */}
-            <p className="text-gray-500 w-full md:w-4/5">
+            <p className="text-gray-500 text-sm lg:text-base w-full lg:w-4/5">
               {productData?.description}
             </p>
 
@@ -147,7 +149,7 @@ const Product = () => {
 
             <hr className=" text-gray-200 w-4/5" />
 
-            <div className="flex flex-col gap-1 text-sm text-gray-500">
+            <div className="flex flex-col gap-1 text-xs lg:text-sm text-gray-500">
               <p>100% Original product.</p>
               <p>Cash on delivery is available on this product.</p>
               <p>Easy return and exchange policy within 7 days.</p>

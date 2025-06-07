@@ -30,7 +30,7 @@ const BestSeller = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
           {bestSellers.map((bestSeller, index) => (
             <Link
               to={`/product/${bestSeller._id}`}
