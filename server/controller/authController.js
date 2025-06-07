@@ -141,6 +141,7 @@ export const adminLogin = async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       secure: process.env.NODE_ENV !== "development",
+      partitioned: true,
     });
 
     return res.status(200).json({

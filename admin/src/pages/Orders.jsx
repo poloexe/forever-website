@@ -78,7 +78,9 @@ const Orders = () => {
               </div>
 
               <div className="flex flex-col gap-1">
-                <h1 className="text-sm font-medium">Baruch Isemin</h1>
+                <h1 className="text-sm font-medium">
+                  {order.address.firstName} {order.address.lastName}
+                </h1>
 
                 <p>
                   {order.address.street}, {order.address.city} <br />
