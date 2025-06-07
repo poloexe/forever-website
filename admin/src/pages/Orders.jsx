@@ -1,53 +1,12 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { assets } from "../assets/assets";
 import { currency } from "../App";
+import { useOrderData } from "../hooks/userOrderData";
+import { useUpdateStatus } from "../hooks/useUpdateStatus";
 
 const Orders = () => {
-  const { data: orderData = [] } = useQuery({
-    queryKey: ["orders"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          "https://forever-website-1mf9.onrender.com/api/order/admin/lists",
-          {
-            credentials: "include",
-          }
-        );
+  const { data: orderData = [] } = useOrderData();
 
-        const payload = await res.json();
-
-        if (!res.ok) throw new Error(payload.msg || "Could not get orders");
-        return payload.orders;
-      } catch (error) {
-        console.log(error.message);
-        throw error;
-      }
-    },
-    retry: false,
-  });
-
-  const queryClient = useQueryClient();
-
-  const { mutate: updateStatus } = useMutation({
-    mutationFn: async ({ status, orderId }) => {
-      const res = await fetch(
-        "https://forever-website-1mf9.onrender.com/api/order/admin/status",
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ status, orderId }),
-          credentials: "include",
-        }
-      );
-
-      const payload = await res.json();
-
-      if (!res.ok) throw new Error(payload.msg || "Could not update status");
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
-    },
-  });
+  const { mutate: updateStatus } = useUpdateStatus();
 
   const handleOrderStatus = (status, orderId) => {
     updateStatus({ status, orderId });

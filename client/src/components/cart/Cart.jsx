@@ -39,8 +39,6 @@ const Cart = () => {
     setCartData(tempData);
   }, [cart]);
 
-  console.log("Cart: ", cart);
-
   return (
     <>
       <div className="pt-14 border-t-1 border-gray-200">

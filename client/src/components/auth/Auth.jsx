@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLoginUser } from "../../hooks/useLoginUser";
+import { useRegisterUser } from "../../hooks/useRegisterUser";
+import { useAuthUser } from "../../hooks/useAuthUser";
+import { Navigate } from "react-router-dom";
+import { LoaderSpinner } from "../Loading/LoaderSpinner";
 
 const Auth = () => {
   const [currentState, setCurrentState] = useState("Login");
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
     fullname: "",
@@ -24,56 +24,21 @@ const Auth = () => {
     isError: isLoginError,
     error: loginError,
     isPending: isloggingIn,
-  } = useMutation({
-    mutationFn: async ({ email, password }) => {
-      const res = await fetch(
-        "https://forever-website-1mf9.onrender.com/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
-      const payload = await res.json();
-
-      if (!res.ok) throw new Error(payload.msg || "Something went wrong");
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["authUser"] });
-      toast.success("Login Successful 😊");
-      navigate("/");
-    },
-  });
+  } = useLoginUser();
 
   const {
     mutate: register,
     isError: isRegisterError,
     error: registerError,
     isPending: isRegistering,
-  } = useMutation({
-    mutationFn: async (data) => {
-      const res = await fetch("http://localhost:8000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(data),
-      });
+  } = useRegisterUser();
 
-      const payload = await res.json();
-
-      if (!res.ok) throw new Error(payload.msg || "Something went wrong");
-    },
-    onSuccess: () => {
-      toast.success("Registered Successfully 👌");
-      setCurrentState("Login");
-    },
-  });
+  const {
+    data: user,
+    isLoading: isLoadingUser,
+    isFetching: isUserFetching,
+    isSuccess: isUserSuccess,
+  } = useAuthUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,7 +49,10 @@ const Auth = () => {
       register(formData);
     }
   };
-  
+
+  if (isLoadingUser || isUserFetching) return <LoaderSpinner />;
+  if (isUserSuccess && user) return <Navigate to="/" replace />;
+
   return (
     <>
       <form

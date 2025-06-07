@@ -3,7 +3,7 @@ import Sidebar from "./components/Sidebar";
 import Lists from "./pages/Lists";
 import AddItems from "./pages/AddItems";
 import Orders from "./pages/Orders";
-import { Route, Routes, Outlet, Navigate } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer, Slide } from "react-toastify";

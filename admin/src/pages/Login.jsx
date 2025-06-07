@@ -10,7 +10,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const { data: admin, isLoading, isError, error } = useAdminUser();
+  const { data: admin, isLoading, isFetching, isSuccess } = useAdminUser();
 
   const handleInputChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -27,14 +27,8 @@ const Login = () => {
     login(formData);
   };
 
-  useEffect(() => {
-    if (isError && error?.message) {
-      toast.error(error.message);
-    }
-  }, [isError, error]);
-
-  if (isLoading) return <LoaderSpinner />;
-  if (admin) return <Navigate to="/add" replace />;
+  if (isLoading || isFetching) return <LoaderSpinner />;
+  if (isSuccess && admin) return <Navigate to="/add" replace />;
 
   return (
     <div className="min-h-screen flex items-center justify-center">

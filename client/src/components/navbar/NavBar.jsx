@@ -3,9 +3,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import SearchBar from "../search/SearchBar";
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import MobileMenu from "../mobile/MobileMenu";
+import { useLogout } from "../../hooks/useLogout";
 
 const NavBar = () => {
   const navLinks = [
@@ -28,31 +27,10 @@ const NavBar = () => {
   ];
   const [visible, setVisible] = useState(false); // Mobile Menu
   const [showMenu, setShowMenu] = useState(false); // Dropdown menu
-  const { user, setUser, getCartTotal } = useContext(ShopContext);
-  const queryClient = useQueryClient();
+  const { user, getCartTotal } = useContext(ShopContext);
   const navigate = useNavigate();
 
-  const { mutate: logout } = useMutation({
-    mutationFn: async () => {
-      const res = await fetch(
-        "https://forever-website-1mf9.onrender.com/api/auth/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
-
-      const payload = await res.json();
-
-      if (!res.ok) throw new Error(payload.msg || "Something went wrong");
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["authUser"] });
-      setUser(null);
-      toast.success("Logged out!...👋🏾");
-      navigate("/auth");
-    },
-  });
+  const { mutate: logout } = useLogout();
 
   const handleLogout = (e) => {
     e.preventDefault();

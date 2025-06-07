@@ -1,48 +1,12 @@
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { useOrderData } from "../../hooks/useOrderData";
 
 const Orders = () => {
   const { currency } = useContext(ShopContext);
   const queryClient = useQueryClient();
-
-  const { data: orderData = [] } = useQuery({
-    queryKey: ["orders"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          "https://forever-website-1mf9.onrender.com/api/order/user/lists",
-          {
-            credentials: "include",
-          }
-        );
-
-        const payload = await res.json();
-        console.log("Payload: ", payload.orders);
-
-        if (!res.ok) throw new Error(payload.msg || "Could not get orders");
-
-        const allOrderItems = [];
-
-        payload.orders.map((order) =>
-          order.items.map((item) => {
-            item["status"] = order.status;
-            item["payment"] = order.payment;
-            item["paymentMethod"] = order.paymentMethod;
-            item["date"] = order.createdAt;
-
-            allOrderItems.push(item);
-          })
-        );
-
-        return allOrderItems.reverse();
-      } catch (error) {
-        console.log(error.message);
-        throw error;
-      }
-    },
-    retry: false,
-  });
+  const { data: orderData = [] } = useOrderData();
 
   return (
     <>

@@ -1,6 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAuthUser } from "../../hooks/useAuthUser";
+import { useProducts } from "../../hooks/useProducts";
+import { useUserCart } from "../../hooks/useUserCart";
+import { useAddToCartMutation } from "../../hooks/useAddToCartMutation";
 
 export const ShopContext = createContext();
 
@@ -11,96 +14,11 @@ export const ShopProvider = ({ children }) => {
   const [cart, setCart] = useState({});
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
-  const { mutate: addToCartMutation } = useMutation({
-    mutationFn: async ({ itemId, size }) => {
-      try {
-        const res = await fetch(
-          "https://forever-website-1mf9.onrender.com/api/cart/add",
-          {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ itemId, size }),
-          }
-        );
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.msg || "Failed to add to cart");
-
-        return data;
-      } catch (error) {
-        console.log(error.message);
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["userCart"]);
-    },
-  });
-
-  const { data: userCart } = useQuery({
-    queryKey: ["userCart"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          "https://forever-website-1mf9.onrender.com/api/cart/fetchcart",
-
-          {
-            credentials: "include",
-          }
-        );
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.msg || "Something went wrong");
-
-        return data;
-      } catch (error) {
-        console.log(error.message);
-        throw error;
-      }
-    },
-    retry: false,
-  });
-
-  const { data: products = [] } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const res = await fetch(
-        "https://forever-website-1mf9.onrender.com/api/product/all"
-      );
-      const resData = await res.json();
-
-      if (!res.ok) throw new Error(resData.message || "Something went wrong");
-
-      return resData.products;
-    },
-  });
-
-  const { data: authUser, isSuccess } = useQuery({
-    queryKey: ["authUser"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          "https://forever-website-1mf9.onrender.com/api/auth/getme",
-          {
-            credentials: "include",
-          }
-        );
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.msg || "Something went wrong");
-
-        return data;
-      } catch (error) {
-        return null;
-      }
-    },
-    staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
-  });
+  const { data: userCart } = useUserCart();
+  const { data: products = [] } = useProducts();
+  const { data: authUser, isSuccess } = useAuthUser();
+  const { mutate: addToCartMutation } = useAddToCartMutation();
 
   const addToCart = (productId, size) => {
     const cartCopy = structuredClone(cart);

@@ -1,37 +1,8 @@
 import { assets } from "../assets/assets";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useLogout } from "../hooks/useLogout";
 
 const Navbar = () => {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
-
-  const { mutate: logout, isPending } = useMutation({
-    mutationFn: async () => {
-      const res = await fetch(
-        "https://forever-website-1mf9.onrender.com/api/auth/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.msg || "Something went wrong");
-    },
-
-    onError: (error) => {
-      toast.error(error.message);
-    },
-
-    onSuccess: () => {
-      toast.success("Logout Success!");
-      queryClient.invalidateQueries({ queryKey: ["authAdmin"] });
-      navigate("/");
-    },
-  });
+  const { mutate: logout, isPending } = useLogout();
 
   const handleLogout = (e) => {
     e.preventDefault();
