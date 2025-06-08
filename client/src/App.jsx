@@ -13,11 +13,11 @@ import Orders from "./components/cart/Orders";
 import Auth from "./components/auth/Auth";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
-
 const App = () => {
   return (
     <>
       <ToastContainer
+        position="bottom-right"
         autoClose={2000}
         limit={3}
         hideProgressBar={true}
