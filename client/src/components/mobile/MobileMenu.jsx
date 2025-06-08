@@ -4,7 +4,7 @@ import { assets } from "../../assets/assets";
 const MobileMenu = ({ visible, setVisible, navLinks }) => {
   return (
     <div
-      className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all duration-300 ${
+      className={`fixed top-0 right-0 bottom-0 overflow-hidden bg-white transition-all duration-300 ${
         visible ? "w-full z-50" : "w-0"
       }`}
     >

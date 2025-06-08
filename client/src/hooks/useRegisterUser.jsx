@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
-export const useRegisterUser = () => {
+export const useRegisterUser = (setCurrentState) => {
   return useMutation({
     mutationFn: async (data) => {
       const res = await fetch(

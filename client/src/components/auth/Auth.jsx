@@ -31,7 +31,7 @@ const Auth = () => {
     isError: isRegisterError,
     error: registerError,
     isPending: isRegistering,
-  } = useRegisterUser();
+  } = useRegisterUser(setCurrentState);
 
   const {
     data: user,
@@ -117,7 +117,12 @@ const Auth = () => {
           )}
         </div>
         <div className="flex justify-between w-full text-sm">
-          <p className="cursor-pointer hover:opacity-50">Forgot password ?</p>
+          <p
+            className="cursor-pointer hover:opacity-50"
+            onClick={() => alert("So you don forget fast fast?😹")}
+          >
+            Forgot password ?
+          </p>
           {currentState === "Login" ? (
             <p
               className="cursor-pointer hover:opacity-50"
