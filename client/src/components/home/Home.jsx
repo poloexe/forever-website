@@ -1,4 +1,3 @@
-import React from "react";
 import LatestCollection from "./LatestCollection";
 import Hero from "./Hero";
 import BestSeller from "./BestSeller";

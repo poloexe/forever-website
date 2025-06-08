@@ -24,7 +24,7 @@ const App = () => {
         transition={Slide}
       />
 
-      <div className="px-5 lg:px-[8rem]">
+      <div className="px-5 lg:px-[8rem] min-h-screen">
         <NavBar />
         <Routes>
           <Route path="/auth" element={<Auth />} />

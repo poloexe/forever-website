@@ -99,11 +99,11 @@ const PlaceOrder = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between">
+    <div className="flex flex-col lg:flex-row justify-between">
       {/* Left Side  */}
       <form
         ref={formRef}
-        className="flex flex-col gap-10 mt-15 py-4 w-full md:w-[480px]"
+        className="flex flex-col gap-10 mt-15 py-4 w-full lg:w-[480px]"
         onSubmit={submitForm}
       >
         <div className="flex items-center md:flex-row gap-2 text-2xl text-gray-400">
