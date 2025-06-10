@@ -17,7 +17,6 @@ const App = () => {
   return (
     <>
       <ToastContainer
-        position="bottom-right"
         autoClose={2000}
         limit={3}
         hideProgressBar={true}
