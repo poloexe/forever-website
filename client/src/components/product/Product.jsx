@@ -139,7 +139,7 @@ const Product = () => {
                   if (user) {
                     handleAddToCart();
                   } else {
-                    toast.error("Sorry....Login first 🔑");
+                    toast.error("Login Required! 🔑");
                   }
                 }}
               >
